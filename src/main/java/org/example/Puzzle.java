@@ -168,7 +168,11 @@ public class Puzzle
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Puzzle puzzle1 = (Puzzle) o;
-        return size == puzzle1.size && true; //TODO: vérifier que les deux puzzles sont égaux
+        if (size != puzzle1.size) return false;
+        for (int i = 0; i < size; i++) {
+            if (!puzzle.get(i).equals(puzzle1.puzzle.get(i))) return false;
+        }
+        return true;
     }
 
     @Override
