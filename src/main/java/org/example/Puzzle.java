@@ -7,7 +7,7 @@ import java.util.List;
 public class Puzzle
 {
     private int size;
-    private final List<List<Integer>> puzzle;
+    private List<List<Integer>> puzzle;
     private Point blankCoordinates;
 
     private Puzzle() {
@@ -59,6 +59,11 @@ public class Puzzle
         Collections.shuffle(l);
         populatePuzzleFromList(l);
         storeBlankPosition();
+        if (!isSolvable()) {
+            puzzle = new ArrayList<>();
+            blankCoordinates = new Point();
+            generateRandomPuzzle();
+        }
     }
 
     private Integer getPiece(int row, int column) {
@@ -131,13 +136,14 @@ public class Puzzle
                     if (j == 0) {
                         if (i != 0) {
                             i -= 1;
-                            j = size - 2;
+                            j = size - 1;
                         } else {
                             j -= 1;
                         }
                     } else {
                         j -= 1;
                     }
+
                 }
             }
         }
@@ -157,22 +163,31 @@ public class Puzzle
         return s.toString().replaceAll("(?<![0-9])0(?![0-9])", "b");
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Puzzle puzzle1 = (Puzzle) o;
+        return size == puzzle1.size && true; //TODO: vérifier que les deux puzzles sont égaux
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, puzzle, blankCoordinates);
+    }
+
     public static void main(String[] args) {
-        Puzzle p = new Puzzle(4, Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14, 0));
-        Puzzle p2 = p.getCopy();
-        System.out.println("Possible moves: " + p.getSetOfMoves());
-        System.out.println("Puzzle resolved: " + p.isResolved());
-        System.out.println("Is solvable: " + p.isSolvable());
+        Puzzle p = new Puzzle(4);
+        p.generateRandomPuzzle();
         System.out.println(p);
-        p.move(3, 2);
-        System.out.println("Possible moves: " + p.getSetOfMoves());
-        System.out.println("Puzzle resolved: " + p.isResolved());
-        System.out.println("Is solvable: " + p.isSolvable());
+        System.out.println(p.getSetOfMoves());
+        Puzzle p2 = p.getCopy(); // renvoie une copie indépendante
+        Point move = (Point) p.getSetOfMoves().toArray()[0];
+        System.out.println(p.equals(p2));
+        p.move(move.x, move.y);
+        System.out.println(p.equals(p2));
+        System.out.println(move);
         System.out.println(p);
-        p.move(2, 2);
-        System.out.println("Possible moves: " + p.getSetOfMoves());
-        System.out.println("Puzzle resolved: " + p.isResolved());
-        System.out.println("Is solvable: " + p.isSolvable());
-        System.out.println(p);
+        System.out.println(p2);
     }
 }
