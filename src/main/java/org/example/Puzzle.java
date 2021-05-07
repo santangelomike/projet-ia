@@ -117,7 +117,7 @@ public class Puzzle
         for (List<Integer> l : puzzle) {
             p.puzzle.add(new ArrayList<>(l));
         }
-        p.blankCoordinates = blankCoordinates;
+        p.blankCoordinates = new Point(blankCoordinates.x, blankCoordinates.y);
         return p;
     }
 
