@@ -1,27 +1,34 @@
-package org.example;
+package game;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class Puzzle
 {
+    private int nbMoves;
     private int size;
     private List<List<Integer>> puzzle;
     private Point blankCoordinates;
 
     private Puzzle() {
         puzzle = new ArrayList<>();
+        nbMoves = 0;
+    }
+
+    private void populateSize(int size) {
+        if (size <= 1) throw new IllegalArgumentException("Size must be greater than 1.");
+        this.size = size;
     }
 
     public Puzzle(int size) {
         this();
-        if (size <= 0) throw new IllegalArgumentException("Size must be greater than 0.");
-        this.size = size;
+        populateSize(size);
+        generateRandomPuzzle();
     }
 
     public Puzzle(int size, List<Integer> initialState) {
-        this(size);
+        this();
+        populateSize(size);
         generatePuzzle(initialState);
     }
 
@@ -51,7 +58,7 @@ public class Puzzle
         storeBlankPosition();
     }
 
-    public void generateRandomPuzzle() {
+    private void generateRandomPuzzle() {
         ArrayList<Integer> l = new ArrayList<>();
         for (int i = 0; i < size * size; i++) {
             l.add(i);
@@ -77,21 +84,34 @@ public class Puzzle
         puzzle.get(row2).set(column2, piece1);
     }
 
+    private boolean coordinateOutOfBounds(Point p) {
+        return coordinateOutOfBounds(p.getRow(), p.getColumn());
+    }
+
     private boolean coordinateOutOfBounds(int row, int column) {
         return row < 0 || row >= size || column < 0 || column >= size;
     }
 
+    public void move(Point p) {
+        move(p.getRow(), p.getColumn());
+    }
+
+    public int getNbMoves() {
+        return nbMoves;
+    }
+
     public void move(int row, int column) {
-        if (puzzle.size() == 0) throw new IllegalStateException("Puzzle is not instantiated. You can call the generateRandomPuzzle method.");
         if (coordinateOutOfBounds(row, column)) throw new IndexOutOfBoundsException("Coordinates specified don't match with the size of the puzzle");
-        if (Math.abs(blankCoordinates.x - row) + Math.abs(blankCoordinates.y - column) > 1) throw new IllegalArgumentException("The piece (" + row + ", " + column + ") you want to move can't be moved");
-        replace(row, column, blankCoordinates.x, blankCoordinates.y);
-        blankCoordinates.x = row;
-        blankCoordinates.y = column;
+        int x = blankCoordinates.getRow();
+        int y = blankCoordinates.getColumn();
+        if (Math.abs(x - row) + Math.abs(y - column) > 1) throw new IllegalArgumentException("The piece (" + row + ", " + column + ") you want to move can't be moved");
+        replace(row, column, x, y);
+        blankCoordinates.setRow(row);
+        blankCoordinates.setColumn(column);
+        nbMoves++;
     }
 
     public boolean isResolved() {
-        if (puzzle.size() == 0) throw new IllegalStateException("Puzzle is not instantiated. You can call the generateRandomPuzzle method.");
         int counter = 0;
         for (List<Integer> l : puzzle) {
             for (Integer i : l) {
@@ -102,28 +122,28 @@ public class Puzzle
     }
 
     public Set<Point> getSetOfMoves() {
-        if (puzzle.size() == 0) throw new IllegalStateException("Puzzle is not instantiated. You can call the generateRandomPuzzle method.");
-        int x = blankCoordinates.x, y = blankCoordinates.y;
+        int x = blankCoordinates.getRow(), y = blankCoordinates.getColumn();
         List<Point> coordinates = new ArrayList<>(Arrays.asList(new Point(x - 1, y), new Point(x + 1, y), new Point(x, y - 1), new Point(x, y + 1)));
         Set<Point> possibleMoves = new HashSet<>();
         for (Point p : coordinates) {
-            if (!coordinateOutOfBounds(p.x, p.y)) possibleMoves.add(p);
+            if (!coordinateOutOfBounds(p)) possibleMoves.add(p);
         }
         return possibleMoves;
     }
 
-    private Puzzle getCopy() {
-        Puzzle p = new Puzzle(size);
+    public Puzzle getCopy() {
+        Puzzle p = new Puzzle();
+        p.populateSize(size);
         for (List<Integer> l : puzzle) {
             p.puzzle.add(new ArrayList<>(l));
         }
-        p.blankCoordinates = new Point(blankCoordinates.x, blankCoordinates.y);
+        p.blankCoordinates = new Point(blankCoordinates.getRow(), blankCoordinates.getColumn());
+        p.nbMoves = nbMoves;
         return p;
     }
 
     public boolean isSolvable() {
-        if (puzzle.size() == 0) throw new IllegalStateException("Puzzle is not instantiated. You can call the generateRandomPuzzle method.");
-        boolean evenBlank = ((blankCoordinates.x + blankCoordinates.y) % 2) == 0;
+        boolean evenBlank = ((blankCoordinates.getRow() + blankCoordinates.getColumn()) % 2) == 0;
         int counterTransitions = 0;
         int counter = 0;
         Puzzle tmp = getCopy();
@@ -183,13 +203,12 @@ public class Puzzle
 
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4);
-        p.generateRandomPuzzle();
         System.out.println(p);
         System.out.println(p.getSetOfMoves());
         Puzzle p2 = p.getCopy(); // renvoie une copie indépendante
         Point move = (Point) p.getSetOfMoves().toArray()[0];
         System.out.println(p.equals(p2));
-        p.move(move.x, move.y);
+        p.move(move);
         System.out.println(p.equals(p2));
         System.out.println(move);
         System.out.println(p);
