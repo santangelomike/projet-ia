@@ -5,8 +5,8 @@ import game.Puzzle;
 
 import java.util.*;
 
-public class UniformCostSearch {
-    public static Puzzle solve(Puzzle p) {
+public class UniformCostSearch implements Solver {
+    public Output solve(Puzzle p) {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
             public int compare(Puzzle o1, Puzzle o2) {
@@ -17,11 +17,11 @@ public class UniformCostSearch {
         Set<Puzzle> explored = new HashSet<>();
         while (true) {
             if (frontier.size() == 0) {
-                return null;
+                return new Output(0, explored.size(), false);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
-            if (node.isResolved()) return node;
+            if (node.isResolved()) return new Output(frontier.size(), explored.size(), true);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
@@ -56,6 +56,6 @@ public class UniformCostSearch {
     }
 
     public static void main(String[] args) {
-        System.out.println(solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new UniformCostSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }

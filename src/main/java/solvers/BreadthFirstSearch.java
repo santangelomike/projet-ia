@@ -5,17 +5,17 @@ import game.Puzzle;
 
 import java.util.*;
 
-public class BreadthFirstSearch {
-    public static Puzzle solve(Puzzle p) {
+public class BreadthFirstSearch implements Solver {
+    public Output solve(Puzzle p) {
         if (p.isResolved()) {
-            return p;
+            return new Output(0, 0, true);
         }
         Queue<Puzzle> frontier = new LinkedList<>();
         frontier.add(p);
         Set<Puzzle> explored = new HashSet<>();
         while (true) {
             if (frontier.size() == 0) {
-                return null;
+                return new Output(0, explored.size(), false);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
@@ -24,7 +24,7 @@ public class BreadthFirstSearch {
                 child.move(point);
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     if (child.isResolved()) {
-                        return child;
+                        return new Output(frontier.size(), explored.size(), true);
                     }
                     frontier.add(child);
                 }
@@ -43,6 +43,6 @@ public class BreadthFirstSearch {
     }
 
     public static void main(String[] args) {
-        solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2)));
+        System.out.println(new BreadthFirstSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }
