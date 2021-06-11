@@ -5,6 +5,8 @@ import game.Puzzle;
 
 import java.util.*;
 
+import static java.lang.Math.max;
+
 public class UniformCostSearch implements Solver {
     public Output solve(Puzzle p) {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
@@ -15,18 +17,22 @@ public class UniformCostSearch implements Solver {
         });
         frontier.add(p);
         Set<Puzzle> explored = new HashSet<>();
+        int numberMoves = 0;
+        int maxNumberFrontierNodes = 1;
         while (true) {
             if (frontier.size() == 0) {
-                return new Output(0, explored.size(), false);
+                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
-            if (node.isResolved()) return new Output(frontier.size(), explored.size(), true);
+            if (node.isResolved()) return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
+                numberMoves++;
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.add(child);
+                    maxNumberFrontierNodes = max(maxNumberFrontierNodes, frontier.size());
                 }
                 else {
                     Puzzle toRemove = null;
@@ -39,6 +45,7 @@ public class UniformCostSearch implements Solver {
                     if (toRemove != null) {
                         frontier.remove(toRemove);
                         frontier.add(child);
+                        maxNumberFrontierNodes = max(maxNumberFrontierNodes, frontier.size());
                     }
                 }
             }

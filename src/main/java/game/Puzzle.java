@@ -30,6 +30,7 @@ public class Puzzle
         this();
         populateSize(size);
         generatePuzzle(initialState);
+        if (!isSolvable()) throw new IllegalArgumentException("Puzzle specified is not solvable.");
     }
 
     private void storeBlankPosition() {
@@ -142,7 +143,7 @@ public class Puzzle
         return p;
     }
 
-    public boolean isSolvable() {
+    private boolean isSolvable() {
         boolean evenBlank = ((blankCoordinates.getRow() + blankCoordinates.getColumn()) % 2) == 0;
         int counterTransitions = 0;
         int counter = 0;

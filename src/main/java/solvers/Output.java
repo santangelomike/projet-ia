@@ -1,22 +1,28 @@
 package solvers;
 
-import game.Point;
-import utils.Pair;
-
-public class Output extends Pair<Integer, Integer> {
+public class Output {
     private final boolean puzzleResolved;
+    private final Integer numberGeneratedNodes;
+    private final Integer numberNodesInMemory;
+    private final Integer maxNumberFrontierNodes;
 
-    public Output(Integer nbFrontierNodes, Integer nbExploredNodes, boolean puzzleResolved) {
-        super(nbFrontierNodes, nbExploredNodes);
+    public Output(Integer numberGeneratedNodes, Integer numberNodesInMemory, Integer maxNumberFrontierNodes, boolean puzzleResolved) {
+        this.numberGeneratedNodes = numberGeneratedNodes;
+        this.numberNodesInMemory = numberNodesInMemory;
+        this.maxNumberFrontierNodes = maxNumberFrontierNodes;
         this.puzzleResolved = puzzleResolved;
     }
 
-    public int getNbFrontierNodes() {
-        return left;
+    public int getNumberGeneratedNodes() {
+        return numberGeneratedNodes;
     }
 
-    public int getNbExploredNodes() {
-        return right;
+    public int getNumberNodesInMemory() {
+        return numberNodesInMemory;
+    }
+
+    public int getMaxNumberFrontierNodes() {
+        return maxNumberFrontierNodes;
     }
 
     public boolean isPuzzleResolved() {
@@ -24,6 +30,6 @@ public class Output extends Pair<Integer, Integer> {
     }
 
     public String toString() {
-        return "{ number of frontier nodes: " + left + ", number of explored nodes: " + right + ", puzzle is" + (puzzleResolved ? "" : " not") + " resolved }";
+        return "{ number of generated nodes: " + numberGeneratedNodes + ", number of nodes in memory: " + numberNodesInMemory + ", max number of frontier nodes: " + maxNumberFrontierNodes + ", puzzle is" + (puzzleResolved ? "" : " not") + " resolved }";
     }
 }
