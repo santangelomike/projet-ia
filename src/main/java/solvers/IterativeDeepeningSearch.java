@@ -56,7 +56,7 @@ public class IterativeDeepeningSearch implements Solver {
         boolean mayHaveChildren = false;
         while (true) {
             if (frontier.size() == 0) {
-                Output o = new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false); //TODO: trouver si mayHaveChildren ou pas
+                Output o = new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
                 return new OutputDLS(mayHaveChildren, o);
             }
             Puzzle node = frontier.pop();
