@@ -70,6 +70,6 @@ public class AStarSearch implements Solver {
     }
 
     public static void main(String[] args) {
-        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new AStarSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }
