@@ -45,7 +45,6 @@ public class UniformCostSearch implements Solver {
                     if (toRemove != null) {
                         frontier.remove(toRemove);
                         frontier.add(child);
-                        maxNumberFrontierNodes = max(maxNumberFrontierNodes, frontier.size());
                     }
                 }
             }

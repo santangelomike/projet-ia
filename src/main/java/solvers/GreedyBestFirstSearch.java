@@ -9,10 +9,11 @@ import java.util.*;
 
 import static java.lang.Math.max;
 
-public class AStarSearch implements Solver {
+public class GreedyBestFirstSearch implements Solver {
+
     private final Heuristic heuristic;
 
-    public AStarSearch(Heuristic h) {
+    public GreedyBestFirstSearch(Heuristic h) {
         this.heuristic = h;
     }
 
@@ -20,7 +21,7 @@ public class AStarSearch implements Solver {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
             public int compare(Puzzle o1, Puzzle o2) {
-                return (heuristic.evaluate(o1) + o1.getNbMoves()) - (heuristic.evaluate(o2) + o2.getNbMoves());
+                return heuristic.evaluate(o1) - heuristic.evaluate(o2);
             }
         });
         frontier.add(p);
@@ -45,7 +46,7 @@ public class AStarSearch implements Solver {
                 else {
                     Puzzle toRemove = null;
                     for (Puzzle puzzle : frontier) {
-                        if (puzzle.equals(child) && (heuristic.evaluate(puzzle) + puzzle.getNbMoves()) > (heuristic.evaluate(child) + child.getNbMoves())) {
+                        if (puzzle.equals(child) && heuristic.evaluate(puzzle) > heuristic.evaluate(child)) {
                             toRemove = puzzle;
                             break;
                         }
@@ -70,6 +71,6 @@ public class AStarSearch implements Solver {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AStarSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }
