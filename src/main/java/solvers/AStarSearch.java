@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 public class AStarSearch implements Solver {
     public Output solve(Puzzle p) {
+        return null;
         /*if (p.isResolved()) return new Output(0, 0, 0, true);
         Stack<Puzzle> frontier = new Stack<>();
         frontier.add(p);
@@ -30,8 +31,8 @@ public class AStarSearch implements Solver {
         }
         System.out.println("------------------------");
         }*/
-        System.out.println(p.manhattanDistance());
-        return new Output(1,1,1,false);
+        //System.out.println(p.manhattanDistance());
+        //return new Output(1,1,1,false);
     }
 
     public static void main(String[] args) {

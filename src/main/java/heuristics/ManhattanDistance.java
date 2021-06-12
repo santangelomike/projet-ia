@@ -3,7 +3,6 @@ package heuristics;
 import game.Puzzle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ManhattanDistance implements Heuristic {
