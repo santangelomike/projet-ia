@@ -74,7 +74,11 @@ public class Puzzle
         }
     }
 
-    private Integer getPiece(int row, int column) {
+    public List<List<Integer>> getPuzzle() { return puzzle; }
+
+    public int getSize() { return size; }
+
+    public Integer getPiece(int row, int column) {
         return puzzle.get(row).get(column);
     }
 
