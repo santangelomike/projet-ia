@@ -11,6 +11,10 @@ import java.util.Stack;
 import static java.lang.Math.max;
 
 public class IterativeDeepeningSearch implements Solver {
+    public static void main(String[] args) {
+        System.out.println(new IterativeDeepeningSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+    }
+
     public Output solve(Puzzle puzzle) {
         int numberGeneratedNodes = 0;
         int numberNodesInMemory = 0;
@@ -23,24 +27,10 @@ public class IterativeDeepeningSearch implements Solver {
             maxNumberFrontierNodes = max(maxNumberFrontierNodes, output.getMaxNumberFrontierNodes());
             if (output.isPuzzleResolved()) {
                 return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, true);
-            }
-            else if (!outputDLS.mayHaveChildren()) {
+            } else if (!outputDLS.mayHaveChildren()) {
                 return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, false);
             }
         }
-    }
-
-    static class OutputDLS {
-        private final boolean mayHaveChildren;
-        private final Output output;
-
-        OutputDLS(boolean mayHaveChildren, Output output) {
-            this.mayHaveChildren = mayHaveChildren;
-            this.output = output;
-        }
-
-        public Output getOutput() { return this.output; }
-        public boolean mayHaveChildren() { return this.mayHaveChildren; }
     }
 
     public OutputDLS solve(Puzzle p, int limit) {
@@ -82,7 +72,21 @@ public class IterativeDeepeningSearch implements Solver {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new IterativeDeepeningSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+    static class OutputDLS {
+        private final boolean mayHaveChildren;
+        private final Output output;
+
+        OutputDLS(boolean mayHaveChildren, Output output) {
+            this.mayHaveChildren = mayHaveChildren;
+            this.output = output;
+        }
+
+        public Output getOutput() {
+            return this.output;
+        }
+
+        public boolean mayHaveChildren() {
+            return this.mayHaveChildren;
+        }
     }
 }

@@ -6,7 +6,8 @@ public class Pair<L, R> {
     protected L left;
     protected R right;
 
-    protected Pair() {}
+    protected Pair() {
+    }
 
     protected Pair(L left, R right) {
         this.left = left;

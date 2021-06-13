@@ -17,6 +17,10 @@ public class GreedyBestFirstSearch implements Solver {
         this.heuristic = h;
     }
 
+    public static void main(String[] args) {
+        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+    }
+
     public Output solve(Puzzle p) {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
@@ -34,7 +38,8 @@ public class GreedyBestFirstSearch implements Solver {
             }
             Puzzle node = frontier.remove();
             explored.add(node);
-            if (node.isResolved()) return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
+            if (node.isResolved())
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
@@ -42,8 +47,7 @@ public class GreedyBestFirstSearch implements Solver {
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.add(child);
                     maxNumberFrontierNodes = max(maxNumberFrontierNodes, frontier.size());
-                }
-                else {
+                } else {
                     Puzzle toRemove = null;
                     for (Puzzle puzzle : frontier) {
                         if (puzzle.equals(child) && heuristic.evaluate(puzzle) > heuristic.evaluate(child)) {
@@ -68,9 +72,5 @@ public class GreedyBestFirstSearch implements Solver {
             }
             System.out.println("------------------------");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }

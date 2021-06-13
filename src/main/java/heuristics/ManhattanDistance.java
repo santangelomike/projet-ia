@@ -3,6 +3,12 @@ package heuristics;
 import game.Puzzle;
 
 public class ManhattanDistance implements Heuristic {
+    public static void main(String[] args) {
+        Puzzle puzzle = new Puzzle(2);
+        System.out.println(puzzle);
+        System.out.println(new ManhattanDistance().evaluate(puzzle));
+    }
+
     public int evaluate(Puzzle p) {
         int distance = 0;
         int size = p.getSize();
@@ -16,11 +22,5 @@ public class ManhattanDistance implements Heuristic {
         }
 
         return distance;
-    }
-
-    public static void main(String[] args) {
-        Puzzle puzzle = new Puzzle(2);
-        System.out.println(puzzle);
-        System.out.println(new ManhattanDistance().evaluate(puzzle));
     }
 }

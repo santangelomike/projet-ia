@@ -1,10 +1,8 @@
 package game;
 
 import java.util.*;
-import java.util.List;
 
-public class Puzzle
-{
+public class Puzzle {
     private int nbMoves;
     private int size;
     private List<List<Integer>> puzzle;
@@ -13,11 +11,6 @@ public class Puzzle
     private Puzzle() {
         puzzle = new ArrayList<>();
         nbMoves = 0;
-    }
-
-    private void populateSize(int size) {
-        if (size <= 1) throw new IllegalArgumentException("Size must be greater than 1.");
-        this.size = size;
     }
 
     public Puzzle(int size) {
@@ -31,6 +24,25 @@ public class Puzzle
         populateSize(size);
         generatePuzzle(initialState);
         if (!isSolvable()) throw new IllegalArgumentException("Puzzle specified is not solvable.");
+    }
+
+    public static void main(String[] args) {
+        Puzzle p = new Puzzle(4);
+        System.out.println(p);
+        System.out.println(p.getSetOfMoves());
+        Puzzle p2 = p.getCopy(); // renvoie une copie indépendante
+        Point move = (Point) p.getSetOfMoves().toArray()[0];
+        System.out.println(p.equals(p2));
+        p.move(move);
+        System.out.println(p.equals(p2));
+        System.out.println(move);
+        System.out.println(p);
+        System.out.println(p2);
+    }
+
+    private void populateSize(int size) {
+        if (size <= 1) throw new IllegalArgumentException("Size must be greater than 1.");
+        this.size = size;
     }
 
     private void storeBlankPosition() {
@@ -51,7 +63,8 @@ public class Puzzle
     }
 
     private void generatePuzzle(List<Integer> initialState) {
-        if (new TreeSet<>(initialState).size() != size * size) throw new IllegalArgumentException("Size of the initial state does not match the size specified (" + size + "), or there is multiple identical values in the initial state specified.");
+        if (new TreeSet<>(initialState).size() != size * size)
+            throw new IllegalArgumentException("Size of the initial state does not match the size specified (" + size + "), or there is multiple identical values in the initial state specified.");
         for (Integer i : initialState) {
             if (i < 0 || i >= size * size) throw new IllegalArgumentException("Puzzle contains illegal numbers.");
         }
@@ -74,15 +87,21 @@ public class Puzzle
         }
     }
 
-    public List<List<Integer>> getPuzzle() { return puzzle; }
+    public List<List<Integer>> getPuzzle() {
+        return puzzle;
+    }
 
-    public int getSize() { return size; }
+    public int getSize() {
+        return size;
+    }
 
     public Integer getPiece(int row, int column) {
         return puzzle.get(row).get(column);
     }
 
-    public Integer getPiece(Point tile) { return getPiece(tile.getRow(), tile.getColumn()); }
+    public Integer getPiece(Point tile) {
+        return getPiece(tile.getRow(), tile.getColumn());
+    }
 
     private void replace(int row1, int column1, int row2, int column2) {
         Integer piece1 = getPiece(row1, column1);
@@ -108,10 +127,12 @@ public class Puzzle
     }
 
     public void move(int row, int column) {
-        if (coordinateOutOfBounds(row, column)) throw new IndexOutOfBoundsException("Coordinates specified don't match with the size of the puzzle");
+        if (coordinateOutOfBounds(row, column))
+            throw new IndexOutOfBoundsException("Coordinates specified don't match with the size of the puzzle");
         int x = blankCoordinates.getRow();
         int y = blankCoordinates.getColumn();
-        if (Math.abs(x - row) + Math.abs(y - column) > 1) throw new IllegalArgumentException("The piece (" + row + ", " + column + ") you want to move can't be moved");
+        if (Math.abs(x - row) + Math.abs(y - column) > 1)
+            throw new IllegalArgumentException("The piece (" + row + ", " + column + ") you want to move can't be moved");
         replace(row, column, x, y);
         blankCoordinates.setRow(row);
         blankCoordinates.setColumn(column);
@@ -158,7 +179,7 @@ public class Puzzle
             for (int j = 0; j < size; j++) {
                 int value = tmp.getPiece(i, j);
                 if (value != counter++) {
-                    tmp.replace(i, j, value/size, value%size);
+                    tmp.replace(i, j, value / size, value % size);
                     counterTransitions++;
                     counter -= 1;
                     if (j == 0) {
@@ -206,19 +227,5 @@ public class Puzzle
     @Override
     public int hashCode() {
         return Objects.hash(size, puzzle, blankCoordinates);
-    }
-
-    public static void main(String[] args) {
-        Puzzle p = new Puzzle(4);
-        System.out.println(p);
-        System.out.println(p.getSetOfMoves());
-        Puzzle p2 = p.getCopy(); // renvoie une copie indépendante
-        Point move = (Point) p.getSetOfMoves().toArray()[0];
-        System.out.println(p.equals(p2));
-        p.move(move);
-        System.out.println(p.equals(p2));
-        System.out.println(move);
-        System.out.println(p);
-        System.out.println(p2);
     }
 }

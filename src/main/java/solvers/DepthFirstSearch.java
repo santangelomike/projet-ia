@@ -11,6 +11,10 @@ import java.util.Stack;
 import static java.lang.Math.max;
 
 public class DepthFirstSearch implements Solver {
+    public static void main(String[] args) {
+        System.out.println(new DepthFirstSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+    }
+
     public Output solve(Puzzle p) {
         if (p.isResolved()) return new Output(0, 0, 0, true);
         Stack<Puzzle> frontier = new Stack<>();
@@ -21,7 +25,8 @@ public class DepthFirstSearch implements Solver {
         while (true) {
             if (frontier.size() == 0) return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
             Puzzle node = frontier.pop();
-            if (node.isResolved()) return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true);
+            if (node.isResolved())
+                return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true);
             explored.add(node);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
@@ -44,9 +49,5 @@ public class DepthFirstSearch implements Solver {
             }
             System.out.println("------------------------");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new DepthFirstSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 }

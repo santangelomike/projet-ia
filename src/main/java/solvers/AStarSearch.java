@@ -4,10 +4,11 @@ import game.Point;
 import game.Puzzle;
 import heuristics.Heuristic;
 import heuristics.LinearConflict;
-import heuristics.ManhattanDistance;
-import heuristics.NumberOfMisplacedTiles;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 import static java.lang.Math.max;
 
@@ -17,6 +18,10 @@ public class AStarSearch implements Solver {
 
     public AStarSearch(Heuristic h) {
         this.heuristic = h;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new AStarSearch(new LinearConflict()).solve(new Puzzle(3)));
     }
 
     public Output solve(Puzzle p) {
@@ -36,7 +41,8 @@ public class AStarSearch implements Solver {
             }
             Puzzle node = frontier.remove();
             explored.add(node);
-            if (node.isResolved()) return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
+            if (node.isResolved())
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
@@ -44,8 +50,7 @@ public class AStarSearch implements Solver {
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.add(child);
                     maxNumberFrontierNodes = max(maxNumberFrontierNodes, frontier.size());
-                }
-                else {
+                } else {
                     Puzzle toRemove = null;
                     for (Puzzle puzzle : frontier) {
                         if (puzzle.equals(child) && (heuristic.evaluate(puzzle) + puzzle.getNbMoves()) > (heuristic.evaluate(child) + child.getNbMoves())) {
@@ -72,9 +77,5 @@ public class AStarSearch implements Solver {
             }
             System.out.println("------------------------");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new AStarSearch(new LinearConflict()).solve(new Puzzle(3)));
     }
 }

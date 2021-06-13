@@ -3,11 +3,18 @@ package solvers;
 import game.Point;
 import game.Puzzle;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 import static java.lang.Math.max;
 
 public class BreadthFirstSearch implements Solver {
+    public static void main(String[] args) {
+        System.out.println(new BreadthFirstSearch().solve(new Puzzle(2)));
+    }
+
     public Output solve(Puzzle p) {
         if (p.isResolved()) {
             return new Output(0, 0, 0, true);
@@ -46,9 +53,5 @@ public class BreadthFirstSearch implements Solver {
             }
             System.out.println("------------------------");
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new BreadthFirstSearch().solve(new Puzzle(2)));
     }
 }

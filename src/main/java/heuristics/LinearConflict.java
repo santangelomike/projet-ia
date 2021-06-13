@@ -3,11 +3,16 @@ package heuristics;
 import game.Point;
 import game.Puzzle;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 public class LinearConflict implements Heuristic {
+    public static void main(String[] args) {
+        Puzzle puzzle = new Puzzle(2);
+        System.out.println(puzzle);
+        System.out.println(new LinearConflict().evaluate(puzzle));
+    }
+
     public int evaluate(Puzzle p) {
         int distance = new ManhattanDistance().evaluate(p);
         int size = p.getSize();
@@ -52,18 +57,6 @@ public class LinearConflict implements Heuristic {
         return distance;
     }
 
-    static class Conflict {
-        Point tile;
-        Set<Point> conflictualTiles;
-        int value;
-
-        Conflict(Point tile, Set<Point> conflictualTiles, int value) {
-            this.tile = tile;
-            this.conflictualTiles = conflictualTiles;
-            this.value = value;
-        }
-    }
-
     private boolean isConflict(Set<Conflict> conflicts) {
         for (Conflict conflict : conflicts) {
             if (conflict.value != 0) {
@@ -104,7 +97,8 @@ public class LinearConflict implements Heuristic {
         int size = p.getSize();
         int row = tile.getRow();
         int tileValue = p.getPiece(tile);
-        if (tileValue / size != row) return new Conflict(tile, conflictualTiles, nbConflicts); // si la valeur n'est pas sur la bonne ligne, pas de conflit
+        if (tileValue / size != row)
+            return new Conflict(tile, conflictualTiles, nbConflicts); // si la valeur n'est pas sur la bonne ligne, pas de conflit
         for (int column = 0; column < size; column++) {
             Point conflictualTile = new Point(row, column);
             if (inRightRow(p, conflictualTile)) {
@@ -128,7 +122,8 @@ public class LinearConflict implements Heuristic {
         int size = p.getSize();
         int column = tile.getColumn();
         int tileValue = p.getPiece(tile);
-        if (tileValue % size != column) return new Conflict(tile, conflictualTiles, nbConflicts); // si la valeur n'est pas sur la bonne colonne, pas de conflit
+        if (tileValue % size != column)
+            return new Conflict(tile, conflictualTiles, nbConflicts); // si la valeur n'est pas sur la bonne colonne, pas de conflit
         for (int row = 0; row < size; row++) {
             Point conflictualTile = new Point(row, column);
             if (inRightColumn(p, conflictualTile)) {
@@ -145,9 +140,15 @@ public class LinearConflict implements Heuristic {
         return new Conflict(tile, conflictualTiles, nbConflicts);
     }
 
-    public static void main(String[] args) {
-        Puzzle puzzle = new Puzzle(2);
-        System.out.println(puzzle);
-        System.out.println(new LinearConflict().evaluate(puzzle));
+    static class Conflict {
+        Point tile;
+        Set<Point> conflictualTiles;
+        int value;
+
+        Conflict(Point tile, Set<Point> conflictualTiles, int value) {
+            this.tile = tile;
+            this.conflictualTiles = conflictualTiles;
+            this.value = value;
+        }
     }
 }

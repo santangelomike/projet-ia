@@ -3,6 +3,12 @@ package heuristics;
 import game.Puzzle;
 
 public class NumberOfMisplacedTiles implements Heuristic {
+    public static void main(String[] args) {
+        Puzzle puzzle = new Puzzle(3);
+        System.out.println(puzzle);
+        System.out.println(new NumberOfMisplacedTiles().evaluate(puzzle));
+    }
+
     public int evaluate(Puzzle p) {
         int distance = 0;
         int size = p.getSize();
@@ -15,11 +21,5 @@ public class NumberOfMisplacedTiles implements Heuristic {
         }
 
         return distance;
-    }
-
-    public static void main(String[] args) {
-        Puzzle puzzle = new Puzzle(3);
-        System.out.println(puzzle);
-        System.out.println(new NumberOfMisplacedTiles().evaluate(puzzle));
     }
 }
