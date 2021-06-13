@@ -71,7 +71,14 @@ public class Application {
 
         System.out.println(new DepthFirstSearch().solve(puzzle));
 
-//        System.out.println(new DepthLimitedSearch().solve(puzzle));
+        System.out.println("Please provide the depth limited search limit:");
+
+        while (!in.hasNextInt()) {
+            System.out.print("Please provide a positive integer:\n");
+            in.next();
+        }
+
+        System.out.println(new DepthLimitedSearch(in.nextInt()).solve(puzzle));
 
         System.out.println(new GreedyBestFirstSearch(linearConflict).solve(puzzle));
         System.out.println(new GreedyBestFirstSearch(manhattanDistance).solve(puzzle));
