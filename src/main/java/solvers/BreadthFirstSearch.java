@@ -42,16 +42,16 @@ public class BreadthFirstSearch implements Solver {
                     maxNumberFrontierNodes = max(frontier.size(), maxNumberFrontierNodes);
                 }
             }
-            System.out.println("Frontier:");
-            for (Puzzle puzzle : frontier) {
-                System.out.println(puzzle);
-            }
-
-            System.out.println("Explored:");
-            for (Puzzle puzzle : explored) {
-                System.out.println(puzzle);
-            }
-            System.out.println("------------------------");
+//            System.out.println("Frontier:");
+//            for (Puzzle puzzle : frontier) {
+//                System.out.println(puzzle);
+//            }
+//
+//            System.out.println("Explored:");
+//            for (Puzzle puzzle : explored) {
+//                System.out.println(puzzle);
+//            }
+//            System.out.println("------------------------");
         }
     }
 }
