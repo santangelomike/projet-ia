@@ -49,6 +49,6 @@ public class BreadthFirstSearch implements Solver {
     }
 
     public static void main(String[] args) {
-        System.out.println(new BreadthFirstSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new BreadthFirstSearch().solve(new Puzzle(2)));
     }
 }

@@ -82,6 +82,8 @@ public class Puzzle
         return puzzle.get(row).get(column);
     }
 
+    public Integer getPiece(Point tile) { return getPiece(tile.getRow(), tile.getColumn()); }
+
     private void replace(int row1, int column1, int row2, int column2) {
         Integer piece1 = getPiece(row1, column1);
         Integer piece2 = getPiece(row2, column2);

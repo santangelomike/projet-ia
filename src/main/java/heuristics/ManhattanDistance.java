@@ -2,9 +2,6 @@ package heuristics;
 
 import game.Puzzle;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ManhattanDistance implements Heuristic {
     public int evaluate(Puzzle p) {
         int distance = 0;
