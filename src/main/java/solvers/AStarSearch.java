@@ -3,7 +3,9 @@ package solvers;
 import game.Point;
 import game.Puzzle;
 import heuristics.Heuristic;
+import heuristics.LinearConflict;
 import heuristics.ManhattanDistance;
+import heuristics.NumberOfMisplacedTiles;
 
 import java.util.*;
 
@@ -11,6 +13,7 @@ import static java.lang.Math.max;
 
 public class AStarSearch implements Solver {
     private final Heuristic heuristic;
+
 
     public AStarSearch(Heuristic h) {
         this.heuristic = h;
@@ -58,11 +61,13 @@ public class AStarSearch implements Solver {
             }
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
                 System.out.println(puzzle);
             }
 
             System.out.println("Explored:");
             for (Puzzle puzzle : explored) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
                 System.out.println(puzzle);
             }
             System.out.println("------------------------");
@@ -70,6 +75,6 @@ public class AStarSearch implements Solver {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AStarSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new AStarSearch(new LinearConflict()).solve(new Puzzle(3)));
     }
 }
