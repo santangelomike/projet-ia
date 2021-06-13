@@ -49,7 +49,7 @@ public class Application {
         System.out.println("Please provide the puzzle size:");
 
         while (!in.hasNextInt()) {
-            System.out.print("Please provide an integer greater or equal to 2:\n");
+            System.err.print("Please provide an integer greater or equal to 2:\n");
             in.next();
         }
 
@@ -74,7 +74,7 @@ public class Application {
         System.out.println("Please provide the depth limited search limit:");
 
         while (!in.hasNextInt()) {
-            System.out.print("Please provide a positive integer:\n");
+            System.err.print("Please provide a positive integer:\n");
             in.next();
         }
 
@@ -132,7 +132,7 @@ public class Application {
             System.out.println("Possibilities: " + possibilities);
 
             while (!in.hasNextInt()) {
-                System.out.print("Please provide an integer between: " + possibilities + "\n");
+                System.err.print("Please provide an integer between: " + possibilities + "\n");
                 in.next();
             }
 
