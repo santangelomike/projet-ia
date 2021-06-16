@@ -16,8 +16,10 @@ public class ManhattanDistance implements Heuristic {
         for (int row = 0; row < size; row++) {
             for (int column = 0; column < size; column++) {
                 int value = p.getPiece(row, column);
-                distance += Math.abs(row - value / size);
-                distance += Math.abs(column - value % size);
+                if (value != 0) {
+                    distance += Math.abs(row - value / size);
+                    distance += Math.abs(column - value % size);
+                }
             }
         }
 
