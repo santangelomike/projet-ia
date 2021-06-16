@@ -16,17 +16,17 @@ public class DepthFirstSearch implements Solver {
     }
 
     public Output solve(Puzzle p) {
-        if (p.isResolved()) return new Output(0, 0, 0, true);
+        if (p.isResolved()) return new Output(0, 0, 0, true, 0);
         Stack<Puzzle> frontier = new Stack<>();
         frontier.add(p);
         Set<Puzzle> explored = new HashSet<>();
         int numberMoves = 0;
         int maxNumberFrontierNodes = 1;
         while (true) {
-            if (frontier.size() == 0) return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
+            if (frontier.size() == 0) return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
             Puzzle node = frontier.pop();
             if (node.isResolved())
-                return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true);
+                return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getNbMoves());
             explored.add(node);
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();

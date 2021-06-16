@@ -37,12 +37,12 @@ public class AStarSearch implements Solver {
         int maxNumberFrontierNodes = 1;
         while (true) {
             if (frontier.size() == 0) {
-                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
+                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
             if (node.isResolved())
-                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getNbMoves());
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);

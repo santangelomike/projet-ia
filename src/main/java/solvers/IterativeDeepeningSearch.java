@@ -26,16 +26,16 @@ public class IterativeDeepeningSearch implements Solver {
             numberNodesInMemory = max(numberNodesInMemory, output.getNumberNodesInMemory());
             maxNumberFrontierNodes = max(maxNumberFrontierNodes, output.getMaxNumberFrontierNodes());
             if (output.isPuzzleResolved()) {
-                return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, true);
+                return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, true, output.getPathCost());
             } else if (!outputDLS.mayHaveChildren()) {
-                return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, false);
+                return new Output(numberGeneratedNodes, numberNodesInMemory, maxNumberFrontierNodes, false, 0);
             }
         }
     }
 
     public OutputDLS solve(Puzzle p, int limit) {
         if (p.isResolved()) {
-            Output o = new Output(0, 0, 0, true);
+            Output o = new Output(0, 0, 0, true, 0);
             return new OutputDLS(true, o);
         }
         Stack<Puzzle> frontier = new Stack<>();
@@ -46,12 +46,12 @@ public class IterativeDeepeningSearch implements Solver {
         boolean mayHaveChildren = false;
         while (true) {
             if (frontier.size() == 0) {
-                Output o = new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
+                Output o = new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
                 return new OutputDLS(mayHaveChildren, o);
             }
             Puzzle node = frontier.pop();
             if (node.isResolved()) {
-                Output o = new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true);
+                Output o = new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getNbMoves());
                 return new OutputDLS(true, o);
             }
             explored.add(node);

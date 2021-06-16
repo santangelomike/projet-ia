@@ -17,7 +17,7 @@ public class BreadthFirstSearch implements Solver {
 
     public Output solve(Puzzle p) {
         if (p.isResolved()) {
-            return new Output(0, 0, 0, true);
+            return new Output(0, 0, 0, true, 0);
         }
         Queue<Puzzle> frontier = new LinkedList<>();
         frontier.add(p);
@@ -26,7 +26,7 @@ public class BreadthFirstSearch implements Solver {
         int maxNumberFrontierNodes = 1;
         while (true) {
             if (frontier.size() == 0) {
-                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
+                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
@@ -36,7 +36,7 @@ public class BreadthFirstSearch implements Solver {
                 numberMoves++;
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     if (child.isResolved()) {
-                        return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
+                        return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, child.getNbMoves());
                     }
                     frontier.add(child);
                     maxNumberFrontierNodes = max(frontier.size(), maxNumberFrontierNodes);

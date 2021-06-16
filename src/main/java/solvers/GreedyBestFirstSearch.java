@@ -18,7 +18,7 @@ public class GreedyBestFirstSearch implements Solver {
     }
 
     public static void main(String[] args) {
-        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        System.out.println(new GreedyBestFirstSearch(new ManhattanDistance()).solve(new Puzzle(5)));
     }
 
     public Output solve(Puzzle p) {
@@ -34,12 +34,12 @@ public class GreedyBestFirstSearch implements Solver {
         int maxNumberFrontierNodes = 1;
         while (true) {
             if (frontier.size() == 0) {
-                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false);
+                return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
             }
             Puzzle node = frontier.remove();
             explored.add(node);
             if (node.isResolved())
-                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true);
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getNbMoves());
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
