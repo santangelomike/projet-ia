@@ -16,7 +16,7 @@ public class NumberOfMisplacedTiles implements Heuristic {
         for (int row = 0; row < size; row++) {
             for (int column = 0; column < size; column++) {
                 int value = p.getPiece(row, column);
-                distance += (row != value / size || column != value % size) ? 1 : 0;
+                distance += (value != 0 && (row != value / size || column != value % size)) ? 1 : 0;
             }
         }
 
