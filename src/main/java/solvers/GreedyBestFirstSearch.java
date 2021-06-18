@@ -5,16 +5,25 @@ import game.Puzzle;
 import heuristics.Heuristic;
 import heuristics.ManhattanDistance;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 import static java.lang.Math.max;
 
 public class GreedyBestFirstSearch implements Solver {
 
     private final Heuristic heuristic;
+    private boolean print = false;
 
     public GreedyBestFirstSearch(Heuristic h) {
         this.heuristic = h;
+    }
+
+    public GreedyBestFirstSearch(Heuristic h, boolean p) {
+        this(h);
+        this.print = p;
     }
 
     public static void main(String[] args) {
@@ -61,16 +70,19 @@ public class GreedyBestFirstSearch implements Solver {
                     }
                 }
             }
-//            System.out.println("Frontier:");
-//            for (Puzzle puzzle : frontier) {
-//                System.out.println(puzzle);
-//            }
-//
-//            System.out.println("Explored:");
-//            for (Puzzle puzzle : explored) {
-//                System.out.println(puzzle);
-//            }
-//            System.out.println("------------------------");
+
+            if (!print) continue;
+
+            System.out.println("Frontier:");
+            for (Puzzle puzzle : frontier) {
+                System.out.println(puzzle);
+            }
+
+            System.out.println("Explored:");
+            for (Puzzle puzzle : explored) {
+                System.out.println(puzzle);
+            }
+            System.out.println("------------------------");
         }
     }
 }

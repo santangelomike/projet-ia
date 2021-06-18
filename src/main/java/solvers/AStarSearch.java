@@ -14,11 +14,18 @@ import static java.lang.Math.max;
 
 public class AStarSearch implements Solver {
     private final Heuristic heuristic;
+    private boolean print = false;
 
 
     public AStarSearch(Heuristic h) {
         this.heuristic = h;
     }
+
+    public AStarSearch(Heuristic h, boolean p) {
+        this.heuristic = h;
+        this.print = p;
+    }
+
 
     public static void main(String[] args) {
         System.out.println(new AStarSearch(new LinearConflict()).solve(new Puzzle(3)));
@@ -64,18 +71,21 @@ public class AStarSearch implements Solver {
                     }
                 }
             }
-//            System.out.println("Frontier:");
-//            for (Puzzle puzzle : frontier) {
-//                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
-//                System.out.println(puzzle);
-//            }
-//
-//            System.out.println("Explored:");
-//            for (Puzzle puzzle : explored) {
-//                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
-//                System.out.println(puzzle);
-//            }
-//            System.out.println("------------------------");
+
+            if (!print) continue;
+
+            System.out.println("Frontier:");
+            for (Puzzle puzzle : frontier) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
+                System.out.println(puzzle);
+            }
+
+            System.out.println("Explored:");
+            for (Puzzle puzzle : explored) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
+                System.out.println(puzzle);
+            }
+            System.out.println("------------------------");
         }
     }
 }

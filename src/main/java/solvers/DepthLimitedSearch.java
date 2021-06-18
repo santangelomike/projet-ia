@@ -12,10 +12,16 @@ import static java.lang.Math.max;
 
 public class DepthLimitedSearch implements Solver {
     private final int limit;
+    private boolean print = false;
 
     public DepthLimitedSearch(int limit) {
         if (limit <= 0) throw new IllegalArgumentException("Limit must be strictly positive.");
         this.limit = limit;
+    }
+
+    public DepthLimitedSearch(int limit, boolean print) {
+        this(limit);
+        this.print = print;
     }
 
     public static void main(String[] args) {
@@ -47,16 +53,19 @@ public class DepthLimitedSearch implements Solver {
                     }
                 }
             }
-//            System.out.println("Frontier:");
-//            for (Puzzle puzzle : frontier) {
-//                System.out.println(puzzle);
-//            }
-//
-//            System.out.println("Explored:");
-//            for (Puzzle puzzle : explored) {
-//                System.out.println(puzzle);
-//            }
-//            System.out.println("------------------------");
+
+            if(!print) continue;
+
+            System.out.println("Frontier:");
+            for (Puzzle puzzle : frontier) {
+                System.out.println(puzzle);
+            }
+
+            System.out.println("Explored:");
+            for (Puzzle puzzle : explored) {
+                System.out.println(puzzle);
+            }
+            System.out.println("------------------------");
         }
     }
 }

@@ -12,6 +12,16 @@ public class UniformCostSearch implements Solver {
         System.out.println(new UniformCostSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 
+    public UniformCostSearch() {
+
+    }
+
+    private boolean print = false;
+
+    public UniformCostSearch(boolean p) {
+        this.print = p;
+    }
+
     public Output solve(Puzzle p) {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
@@ -52,6 +62,9 @@ public class UniformCostSearch implements Solver {
                     }
                 }
             }
+
+            if (!print) continue;
+
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
                 System.out.println(puzzle);

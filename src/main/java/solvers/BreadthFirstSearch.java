@@ -11,6 +11,16 @@ import java.util.Set;
 import static java.lang.Math.max;
 
 public class BreadthFirstSearch implements Solver {
+
+    private boolean print = false;
+
+    public BreadthFirstSearch() {
+    }
+
+    public BreadthFirstSearch(boolean print) {
+        this.print = print;
+    }
+
     public static void main(String[] args) {
         System.out.println(new BreadthFirstSearch().solve(new Puzzle(2)));
     }
@@ -42,16 +52,19 @@ public class BreadthFirstSearch implements Solver {
                     maxNumberFrontierNodes = max(frontier.size(), maxNumberFrontierNodes);
                 }
             }
-//            System.out.println("Frontier:");
-//            for (Puzzle puzzle : frontier) {
-//                System.out.println(puzzle);
-//            }
-//
-//            System.out.println("Explored:");
-//            for (Puzzle puzzle : explored) {
-//                System.out.println(puzzle);
-//            }
-//            System.out.println("------------------------");
+
+            if (!print) continue;
+
+            System.out.println("Frontier:");
+            for (Puzzle puzzle : frontier) {
+                System.out.println(puzzle);
+            }
+
+            System.out.println("Explored:");
+            for (Puzzle puzzle : explored) {
+                System.out.println(puzzle);
+            }
+            System.out.println("------------------------");
         }
     }
 }
