@@ -56,22 +56,45 @@ public class Application {
         return in.nextInt();
     }
 
+    public static boolean shouldExecute(String nameOfSolver) {
+        char answer;
+
+        System.out.println();
+        System.out.println("Do you want to execute " + nameOfSolver + " ? (y/n):");
+
+        while (true) {
+            answer = in.next().toCharArray()[0];
+            if (answer == 'y') {
+                System.out.println();
+                System.out.println("Executing " + nameOfSolver + "...");
+                System.out.println();
+                return true;
+            } else if (answer == 'n') {
+                return false;
+            } else {
+                System.out.println("Please answer by 'y' or 'n':");
+            }
+        }
+    }
+
     public static void solvePuzzle(Puzzle puzzle) {
         System.out.println(puzzle);
 
-        String answer;
+        char answer;
         boolean print;
 
+        System.out.println("Do you want to print frontiers and explored paths ? (y/n):");
+
         while (true) {
-            answer = in.nextLine();
-            if (answer.equals("y")) {
+            answer = in.next().toCharArray()[0];
+            if (answer == 'y') {
                 print = true;
                 break;
-            } else if (answer.equals("n")) {
+            } else if (answer == 'n') {
                 print = false;
                 break;
             } else {
-                System.out.println("Do you want to print frontiers and explored paths ? (y/n):");
+                System.out.println("Please answer by 'y' or 'n':");
             }
         }
 
@@ -79,56 +102,56 @@ public class Application {
         ManhattanDistance manhattanDistance = new ManhattanDistance();
         NumberOfMisplacedTiles numberOfMisplacedTiles = new NumberOfMisplacedTiles();
 
-        System.out.println("Executing AStarSearch with LinearConflict...");
-        System.out.println(new AStarSearch(linearConflict, print).solve(puzzle));
-        System.out.println();
-
-        System.out.println("Executing AStarSearch with ManhattanDistance...");
-        System.out.println(new AStarSearch(manhattanDistance, print).solve(puzzle));
-        System.out.println();
-
-        System.out.println("Executing AStarSearch with NumberOfMisplacedTiles...");
-        System.out.println(new AStarSearch(numberOfMisplacedTiles, print).solve(puzzle));
-        System.out.println();
-
-        System.out.println("Executing BreadthFirstSearch...");
-        System.out.println(new BreadthFirstSearch(print).solve(puzzle));
-        System.out.println();
-
-        System.out.println("Executing BreadthFirstSearch...");
-        System.out.println(new DepthFirstSearch(print).solve(puzzle));
-        System.out.println();
-
-        System.out.println("Please provide the depth limited search limit:");
-
-        while (!in.hasNextInt()) {
-            System.err.print("Please provide a positive integer:\n");
-            in.next();
+        if (shouldExecute("AStarSearch with LinearConflict")) {
+            System.out.println(new AStarSearch(linearConflict, print).solve(puzzle));
         }
 
-        System.out.println("Executing DepthLimitedSearch...");
-        System.out.println(new DepthLimitedSearch(in.nextInt(), print).solve(puzzle));
-        System.out.println();
+        if (shouldExecute("AStarSearch with ManhattanDistance")) {
+            System.out.println(new AStarSearch(manhattanDistance, print).solve(puzzle));
+        }
 
-        System.out.println("Executing GreedyBestFirstSearch with LinearConflict...");
-        System.out.println(new GreedyBestFirstSearch(linearConflict, print).solve(puzzle));
-        System.out.println();
+        if (shouldExecute("AStarSearch with NumberOfMisplacedTiles")) {
+            System.out.println(new AStarSearch(numberOfMisplacedTiles, print).solve(puzzle));
+        }
 
-        System.out.println("Executing GreedyBestFirstSearch with ManhattanDistance...");
-        System.out.println(new GreedyBestFirstSearch(manhattanDistance, print).solve(puzzle));
-        System.out.println();
+        if (shouldExecute("BreadthFirstSearch")) {
+            System.out.println(new BreadthFirstSearch(print).solve(puzzle));
+        }
 
-        System.out.println("Executing GreedyBestFirstSearch with NumberOfMisplacedTiles...");
-        System.out.println(new GreedyBestFirstSearch(numberOfMisplacedTiles, print).solve(puzzle));
-        System.out.println();
+        if (shouldExecute("DepthFirstSearch")) {
+            System.out.println(new DepthFirstSearch(print).solve(puzzle));
+        }
 
-        System.out.println("Executing IterativeDeepeningSearch...");
-        System.out.println(new IterativeDeepeningSearch().solve(puzzle));
-        System.out.println();
+        if (shouldExecute("DepthLimitedSearch")) {
+            System.out.println("Please provide the depth limited search limit:");
 
-        System.out.println("Executing UniformCostSearch...");
-        System.out.println(new UniformCostSearch(print).solve(puzzle));
-        System.out.println();
+            while (!in.hasNextInt()) {
+                System.err.print("Please provide a positive integer:\n");
+                in.next();
+            }
+
+            System.out.println(new DepthLimitedSearch(in.nextInt(), print).solve(puzzle));
+        }
+
+        if (shouldExecute("GreedyBestFirstSearch with LinearConflict")) {
+            System.out.println(new GreedyBestFirstSearch(linearConflict, print).solve(puzzle));
+        }
+
+        if (shouldExecute("GreedyBestFirstSearch with ManhattanDistance")) {
+            System.out.println(new GreedyBestFirstSearch(manhattanDistance, print).solve(puzzle));
+        }
+
+        if (shouldExecute("GreedyBestFirstSearch with NumberOfMisplacedTiles")) {
+            System.out.println(new GreedyBestFirstSearch(numberOfMisplacedTiles, print).solve(puzzle));
+        }
+
+        if (shouldExecute("IterativeDeepeningSearch")) {
+            System.out.println(new IterativeDeepeningSearch().solve(puzzle));
+        }
+
+        if (shouldExecute("UniformCostSearch")) {
+            System.out.println(new UniformCostSearch(print).solve(puzzle));
+        }
     }
 
     public static void randomPuzzle() {
