@@ -95,7 +95,7 @@ public class Application {
         System.out.println(new BreadthFirstSearch(print).solve(puzzle));
         System.out.println();
 
-        System.out.println("Executing BreadthFirstSearch...");
+        System.out.println("Executing DepthFirstSearch...");
         System.out.println(new DepthFirstSearch(print).solve(puzzle));
         System.out.println();
 
