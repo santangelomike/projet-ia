@@ -160,11 +160,11 @@ public class Application {
 
         if (outputs.size() < 1) return;
 
-        System.out.println("---------------------------");
-        for (Pair<String, Output> output : outputs) {
-            System.out.println(output.toString());
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        for (Pair<String, Output> outputPair : outputs) {
+            System.out.println(outputPair.getLeft() + ": " + outputPair.getRight());
         }
-        System.out.println("---------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
         System.out.println();
     }
