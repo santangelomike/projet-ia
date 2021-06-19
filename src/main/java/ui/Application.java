@@ -5,6 +5,7 @@ import heuristics.LinearConflict;
 import heuristics.ManhattanDistance;
 import heuristics.NumberOfMisplacedTiles;
 import solvers.*;
+import utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,24 +103,26 @@ public class Application {
         ManhattanDistance manhattanDistance = new ManhattanDistance();
         NumberOfMisplacedTiles numberOfMisplacedTiles = new NumberOfMisplacedTiles();
 
+        List<Pair<String, Output>> outputs = new ArrayList<>();
+
         if (shouldExecute("AStarSearch with LinearConflict")) {
-            System.out.println(new AStarSearch(linearConflict, print).solve(puzzle));
+            outputs.add(new Pair<>("AStarSearch with LinearConflict", new AStarSearch(linearConflict, print).solve(puzzle)));
         }
 
         if (shouldExecute("AStarSearch with ManhattanDistance")) {
-            System.out.println(new AStarSearch(manhattanDistance, print).solve(puzzle));
+            outputs.add(new Pair<>("AStarSearch with ManhattanDistance", new AStarSearch(manhattanDistance, print).solve(puzzle)));
         }
 
         if (shouldExecute("AStarSearch with NumberOfMisplacedTiles")) {
-            System.out.println(new AStarSearch(numberOfMisplacedTiles, print).solve(puzzle));
+            outputs.add(new Pair<>("AStarSearch with NumberOfMisplacedTiles", new AStarSearch(numberOfMisplacedTiles, print).solve(puzzle)));
         }
 
         if (shouldExecute("BreadthFirstSearch")) {
-            System.out.println(new BreadthFirstSearch(print).solve(puzzle));
+            outputs.add(new Pair<>("BreadthFirstSearch", new BreadthFirstSearch(print).solve(puzzle)));
         }
 
         if (shouldExecute("DepthFirstSearch")) {
-            System.out.println(new DepthFirstSearch(print).solve(puzzle));
+            outputs.add(new Pair<>("DepthFirstSearch", new DepthFirstSearch(print).solve(puzzle)));
         }
 
         if (shouldExecute("DepthLimitedSearch")) {
@@ -130,28 +133,40 @@ public class Application {
                 in.next();
             }
 
-            System.out.println(new DepthLimitedSearch(in.nextInt(), print).solve(puzzle));
+            outputs.add(new Pair<>("DepthLimitedSearch", new DepthLimitedSearch(in.nextInt(), print).solve(puzzle)));
         }
 
         if (shouldExecute("GreedyBestFirstSearch with LinearConflict")) {
-            System.out.println(new GreedyBestFirstSearch(linearConflict, print).solve(puzzle));
+            outputs.add(new Pair<>("GreedyBestFirstSearch with LinearConflict", new GreedyBestFirstSearch(linearConflict, print).solve(puzzle)));
         }
 
         if (shouldExecute("GreedyBestFirstSearch with ManhattanDistance")) {
-            System.out.println(new GreedyBestFirstSearch(manhattanDistance, print).solve(puzzle));
+            outputs.add(new Pair<>("GreedyBestFirstSearch with ManhattanDistance", new GreedyBestFirstSearch(manhattanDistance, print).solve(puzzle)));
         }
 
         if (shouldExecute("GreedyBestFirstSearch with NumberOfMisplacedTiles")) {
-            System.out.println(new GreedyBestFirstSearch(numberOfMisplacedTiles, print).solve(puzzle));
+            outputs.add(new Pair<>("GreedyBestFirstSearch with NumberOfMisplacedTiles", new GreedyBestFirstSearch(numberOfMisplacedTiles, print).solve(puzzle)));
         }
 
         if (shouldExecute("IterativeDeepeningSearch")) {
-            System.out.println(new IterativeDeepeningSearch().solve(puzzle));
+            outputs.add(new Pair<>("IterativeDeepeningSearch", new IterativeDeepeningSearch().solve(puzzle)));
         }
 
         if (shouldExecute("UniformCostSearch")) {
-            System.out.println(new UniformCostSearch(print).solve(puzzle));
+            outputs.add(new Pair<>("UniformCostSearch", new UniformCostSearch(print).solve(puzzle)));
         }
+
+        System.out.println();
+
+        if (outputs.size() < 1) return;
+
+        System.out.println("---------------------------");
+        for (Pair<String, Output> output : outputs) {
+            System.out.println(output.toString());
+        }
+        System.out.println("---------------------------");
+
+        System.out.println();
     }
 
     public static void randomPuzzle() {
