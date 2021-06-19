@@ -39,7 +39,7 @@ public class DepthLimitedSearch implements Solver {
             if (frontier.size() == 0) return new Output(numberMoves, explored.size(), maxNumberFrontierNodes, false, 0);
             Puzzle node = frontier.pop();
             if (node.isResolved())
-                return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getNbMoves());
+                return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getPathCost());
             explored.add(node);
             if (node.getNbMoves() != limit) {
                 for (Point point : node.getSetOfMoves()) {

@@ -46,7 +46,7 @@ public class BreadthFirstSearch implements Solver {
                 numberMoves++;
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     if (child.isResolved()) {
-                        return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, child.getNbMoves());
+                        return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, child.getPathCost());
                     }
                     frontier.add(child);
                     maxNumberFrontierNodes = max(frontier.size(), maxNumberFrontierNodes);

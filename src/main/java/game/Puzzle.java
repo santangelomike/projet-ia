@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Puzzle {
     private int nbMoves;
+    private int pathCost;
     private int size;
     private List<List<Integer>> puzzle;
     private Point blankCoordinates;
@@ -11,6 +12,7 @@ public class Puzzle {
     private Puzzle() {
         puzzle = new ArrayList<>();
         nbMoves = 0;
+        pathCost = 0;
     }
 
     public Puzzle(int size) {
@@ -126,6 +128,10 @@ public class Puzzle {
         return nbMoves;
     }
 
+    public int getPathCost() {
+        return pathCost;
+    }
+
     public void move(int row, int column) {
         if (coordinateOutOfBounds(row, column))
             throw new IndexOutOfBoundsException("Coordinates specified don't match with the size of the puzzle");
@@ -133,6 +139,7 @@ public class Puzzle {
         int y = blankCoordinates.getColumn();
         if (Math.abs(x - row) + Math.abs(y - column) > 1)
             throw new IllegalArgumentException("The piece (" + row + ", " + column + ") you want to move can't be moved");
+        pathCost += (getPiece(row, column) % 2 == 0) ? 1 : 2;
         replace(row, column, x, y);
         blankCoordinates.setRow(row);
         blankCoordinates.setColumn(column);
@@ -167,6 +174,7 @@ public class Puzzle {
         }
         p.blankCoordinates = new Point(blankCoordinates.getRow(), blankCoordinates.getColumn());
         p.nbMoves = nbMoves;
+        p.pathCost = pathCost;
         return p;
     }
 

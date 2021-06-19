@@ -26,7 +26,7 @@ public class UniformCostSearch implements Solver {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
             public int compare(Puzzle o1, Puzzle o2) {
-                return o1.getNbMoves() - o2.getNbMoves();
+                return o1.getPathCost() - o2.getPathCost();
             }
         });
         frontier.add(p);
@@ -40,7 +40,7 @@ public class UniformCostSearch implements Solver {
             Puzzle node = frontier.remove();
             explored.add(node);
             if (node.isResolved())
-                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getNbMoves());
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getPathCost());
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
@@ -51,7 +51,7 @@ public class UniformCostSearch implements Solver {
                 } else {
                     Puzzle toRemove = null;
                     for (Puzzle puzzle : frontier) {
-                        if (puzzle.equals(child) && puzzle.getNbMoves() > child.getNbMoves()) {
+                        if (puzzle.equals(child) && puzzle.getPathCost() > child.getPathCost()) {
                             toRemove = puzzle;
                             break;
                         }

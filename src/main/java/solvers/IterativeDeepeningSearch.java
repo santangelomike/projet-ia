@@ -51,7 +51,7 @@ public class IterativeDeepeningSearch implements Solver {
             }
             Puzzle node = frontier.pop();
             if (node.isResolved()) {
-                Output o = new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getNbMoves());
+                Output o = new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getPathCost());
                 return new OutputDLS(true, o);
             }
             explored.add(node);

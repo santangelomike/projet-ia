@@ -35,7 +35,7 @@ public class AStarSearch implements Solver {
         PriorityQueue<Puzzle> frontier = new PriorityQueue<>(10, new Comparator<Puzzle>() {
             @Override
             public int compare(Puzzle o1, Puzzle o2) {
-                return (heuristic.evaluate(o1) + o1.getNbMoves()) - (heuristic.evaluate(o2) + o2.getNbMoves());
+                return (heuristic.evaluate(o1) + o1.getPathCost()) - (heuristic.evaluate(o2) + o2.getPathCost());
             }
         });
         frontier.add(p);
@@ -49,7 +49,7 @@ public class AStarSearch implements Solver {
             Puzzle node = frontier.remove();
             explored.add(node);
             if (node.isResolved())
-                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getNbMoves());
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getPathCost());
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
@@ -60,7 +60,7 @@ public class AStarSearch implements Solver {
                 } else {
                     Puzzle toRemove = null;
                     for (Puzzle puzzle : frontier) {
-                        if (puzzle.equals(child) && (heuristic.evaluate(puzzle) + puzzle.getNbMoves()) > (heuristic.evaluate(child) + child.getNbMoves())) {
+                        if (puzzle.equals(child) && (heuristic.evaluate(puzzle) + puzzle.getPathCost()) > (heuristic.evaluate(child) + child.getPathCost())) {
                             toRemove = puzzle;
                             break;
                         }
@@ -76,13 +76,13 @@ public class AStarSearch implements Solver {
 
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
-                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getPathCost()));
                 System.out.println(puzzle);
             }
 
             System.out.println("Explored:");
             for (Puzzle puzzle : explored) {
-                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getNbMoves()));
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle) + puzzle.getPathCost()));
                 System.out.println(puzzle);
             }
             System.out.println("------------------------");

@@ -48,7 +48,7 @@ public class GreedyBestFirstSearch implements Solver {
             Puzzle node = frontier.remove();
             explored.add(node);
             if (node.isResolved())
-                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getNbMoves());
+                return new Output(numberMoves, explored.size() + frontier.size(), maxNumberFrontierNodes, true, node.getPathCost());
             for (Point point : node.getSetOfMoves()) {
                 Puzzle child = node.getCopy();
                 child.move(point);
