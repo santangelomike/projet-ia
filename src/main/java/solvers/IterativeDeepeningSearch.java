@@ -12,7 +12,7 @@ import static java.lang.Math.max;
 
 public class IterativeDeepeningSearch implements Solver {
 
-    private boolean print = false;
+    private final boolean print;
 
     public IterativeDeepeningSearch(boolean print) {
         this.print = print;
@@ -63,7 +63,7 @@ public class IterativeDeepeningSearch implements Solver {
                 return new OutputDLS(true, o);
             }
             explored.add(node);
-            if (node.getNbMoves() != limit) {
+            if ((node.getNbMoves() + 1) != limit) {
                 for (Point point : node.getSetOfMoves()) {
                     Puzzle child = node.getCopy();
                     child.move(point);

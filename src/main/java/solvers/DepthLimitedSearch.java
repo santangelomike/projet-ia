@@ -41,7 +41,7 @@ public class DepthLimitedSearch implements Solver {
             if (node.isResolved())
                 return new Output(numberMoves, frontier.size() + explored.size(), maxNumberFrontierNodes, true, node.getPathCost());
             explored.add(node);
-            if (node.getNbMoves() != limit) {
+            if ((node.getNbMoves() + 1) != limit) {
                 for (Point point : node.getSetOfMoves()) {
                     Puzzle child = node.getCopy();
                     child.move(point);
