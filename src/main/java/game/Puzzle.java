@@ -31,15 +31,10 @@ public class Puzzle {
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4);
         System.out.println(p);
-        System.out.println(p.getSetOfMoves());
-        Puzzle p2 = p.getCopy(); // renvoie une copie indépendante
         Point move = (Point) p.getSetOfMoves().toArray()[0];
-        System.out.println(p.equals(p2));
         p.move(move);
-        System.out.println(p.equals(p2));
-        System.out.println(move);
         System.out.println(p);
-        System.out.println(p2);
+        System.out.println(p.getPathCost());
     }
 
     private void populateSize(int size) {

@@ -34,6 +34,7 @@ public class IterativeDeepeningSearch implements Solver {
     }
 
     public OutputDLS solve(Puzzle p, int limit) {
+        System.out.println("limit = " + limit);
         if (p.isResolved()) {
             Output o = new Output(0, 0, 0, true, 0);
             return new OutputDLS(true, o);
@@ -69,6 +70,16 @@ public class IterativeDeepeningSearch implements Solver {
             } else {
                 mayHaveChildren = true;
             }
+            System.out.println("Frontier:");
+            for (Puzzle puzzle : frontier) {
+                System.out.println(puzzle);
+            }
+
+            System.out.println("Explored:");
+            for (Puzzle puzzle : explored) {
+                System.out.println(puzzle);
+            }
+            System.out.println("------------------------");
         }
     }
 

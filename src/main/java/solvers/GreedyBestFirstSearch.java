@@ -75,11 +75,13 @@ public class GreedyBestFirstSearch implements Solver {
 
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle)));
                 System.out.println(puzzle);
             }
 
             System.out.println("Explored:");
             for (Puzzle puzzle : explored) {
+                System.out.println("f(n): " + (heuristic.evaluate(puzzle)));
                 System.out.println(puzzle);
             }
             System.out.println("------------------------");
