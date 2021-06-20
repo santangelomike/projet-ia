@@ -58,11 +58,13 @@ public class DepthLimitedSearch implements Solver {
 
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
+                System.out.println("depth of this node: " + puzzle.getNbMoves());
                 System.out.println(puzzle);
             }
 
             System.out.println("Explored:");
             for (Puzzle puzzle : explored) {
+                System.out.println("depth of this node: " + puzzle.getNbMoves());
                 System.out.println(puzzle);
             }
             System.out.println("------------------------");
