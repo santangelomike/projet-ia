@@ -11,8 +11,15 @@ import java.util.Stack;
 import static java.lang.Math.max;
 
 public class IterativeDeepeningSearch implements Solver {
+
+    private boolean print = false;
+
+    public IterativeDeepeningSearch(boolean print) {
+        this.print = print;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new IterativeDeepeningSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
+        //System.out.println(new IterativeDeepeningSearch().solve(new Puzzle(2, Arrays.asList(1, 3, 0, 2))));
     }
 
     public Output solve(Puzzle puzzle) {
@@ -70,6 +77,9 @@ public class IterativeDeepeningSearch implements Solver {
             } else {
                 mayHaveChildren = true;
             }
+
+            if (!print) continue;
+
             System.out.println("Frontier:");
             for (Puzzle puzzle : frontier) {
                 System.out.println("depth of this node: " + puzzle.getNbMoves());

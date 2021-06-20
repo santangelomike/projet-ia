@@ -149,7 +149,7 @@ public class Application {
         }
 
         if (shouldExecute("IterativeDeepeningSearch")) {
-            outputs.add(new Pair<>("IterativeDeepeningSearch", new IterativeDeepeningSearch().solve(puzzle)));
+            outputs.add(new Pair<>("IterativeDeepeningSearch", new IterativeDeepeningSearch(print).solve(puzzle)));
         }
 
         if (shouldExecute("UniformCostSearch")) {
